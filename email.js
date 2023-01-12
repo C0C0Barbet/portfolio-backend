@@ -21,9 +21,9 @@ async function mainMail(name, email, subject, message) {
         to: process.env.EMAIL,
         subject: subject,
         html: `You got a message from 
-    Email : ${email}
-    Name: ${name}
-    Message: ${message}`,
+            Email : ${email}
+                Name: ${name}
+                Message: ${message}`,
     };
     try {
         await transporter.sendMail(mailOption);
@@ -32,22 +32,3 @@ async function mainMail(name, email, subject, message) {
         return Promise.reject(error);
     }
 }
-
-app.get("/", (req, res) => {
-    res.render(index.html);
-});
-
-app.get("/contact", (req, res) => {
-    res.render(contact.html);
-});
-
-app.post("/contact", async (req, res, next) => {
-    const {yourname, youremail, yoursubject, yourmessage} = req.body;
-    try {
-        await mainMail(yourname, youremail, yoursubject, yourmessage);
-
-        res.send("Message Successfully Sent!");
-    } catch (error) {
-        res.send("Message Could not be Sent");
-    }
-});
